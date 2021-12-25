@@ -2,11 +2,11 @@ package repository
 
 import (
 	"encoding/json"
-	"io/ioutil"
 	"strconv"
 	"strings"
 
 	"atos.com/domain"
+	"atos.com/static"
 )
 
 type ShopRepository struct {
@@ -20,9 +20,9 @@ func NewShopRepository() domain.ShopRepository {
 		shops:     map[string][]domain.Shop{},
 	}
 
-	shops1 := loadShops("../shop.json")
-	shops2 := loadShops("../shop2.json")
-	shops3 := loadShops("../shop3.json")
+	shops1 := loadShops(static.Shops1)
+	shops2 := loadShops(static.Shops2)
+	shops3 := loadShops(static.Shops3)
 
 	for _, v := range shops1 {
 		repo.shopsById[v.Id] = v
@@ -55,14 +55,9 @@ func NewShopRepository() domain.ShopRepository {
 	return repo
 }
 
-func loadShops(path string) []domain.Shop {
-	b, err := ioutil.ReadFile(path)
-	if err != nil {
-		panic(err)
-	}
-
+func loadShops(bytes string) []domain.Shop {
 	shops := []domain.Shop{}
-	json.Unmarshal(b, &shops)
+	json.Unmarshal([]byte(bytes), &shops)
 	return shops
 }
 
