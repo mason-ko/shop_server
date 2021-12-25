@@ -21,14 +21,22 @@ func RegisterShopHandler(engine *gin.Engine, svc domain.ShopService) {
 }
 
 func (h *ShopHandler) Search(c *gin.Context) {
-	x := c.Param("x")
-	y := c.Param("y")
-	if x == "" || y == "" {
+	var p struct {
+		X     string `form:"x"`
+		Y     string `form:"y"`
+		Limit int    `form:"limit"`
+	}
+
+	if err := c.ShouldBindQuery(&p); err != nil {
 		c.JSON(http.StatusBadRequest, domain.ErrBadParamInput)
 		return
 	}
 
-	shops, err := h.shopServcie.Search(x, y)
+	if p.Limit == 0 {
+		p.Limit = 20
+	}
+
+	shops, err := h.shopServcie.Search(p.X, p.Y, p.Limit)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err)
 		return

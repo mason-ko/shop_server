@@ -15,10 +15,10 @@ type Shop struct {
 
 type ShopService interface {
 	Get(id string) (Shop, error)
-	Search(x, y string) ([]Shop, error)
+	Search(x, y string, limit int) ([]Shop, error)
 }
 
 type ShopRepository interface {
 	Get(id string) (Shop, error)
-	Search(x, y string) ([]Shop, error)
+	Search(x, y string, limit int) ([]Shop, error)
 }

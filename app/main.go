@@ -1,25 +1,19 @@
 package main
 
 import (
-	"fmt"
-
+	"atos.com/shop/controller/http"
+	"atos.com/shop/repository"
+	"atos.com/shop/service"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	fmt.Println("zz")
-
-	return
 	r := gin.Default()
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
-	r.GET("/", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "TEST!!",
-		})
-	})
+
+	shopRepo := repository.NewShopRepository()
+	shopSvc := service.NewShopService(shopRepo)
+
+	http.RegisterShopHandler(r, shopSvc)
+
 	r.Run()
 }
