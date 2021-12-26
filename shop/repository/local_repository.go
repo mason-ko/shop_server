@@ -9,13 +9,13 @@ import (
 	"atos.com/static"
 )
 
-type ShopRepository struct {
+type LocalShopRepository struct {
 	shopsById map[string]domain.Shop
 	shops     map[string][]domain.Shop
 }
 
-func NewShopRepository() domain.ShopRepository {
-	repo := &ShopRepository{
+func NewLocalShopRepository() domain.ShopRepository {
+	repo := &LocalShopRepository{
 		shopsById: map[string]domain.Shop{},
 		shops:     map[string][]domain.Shop{},
 	}
@@ -66,7 +66,7 @@ func getPath(x string, d int) string {
 	return x[:d]
 }
 
-func (s *ShopRepository) Get(id string) (domain.Shop, error) {
+func (s *LocalShopRepository) Get(id string) (domain.Shop, error) {
 	v, o := s.shopsById[id]
 	if !o {
 		return domain.Shop{}, domain.ErrNotFound
@@ -74,14 +74,16 @@ func (s *ShopRepository) Get(id string) (domain.Shop, error) {
 	return v, nil
 }
 
-func (s *ShopRepository) Search(x, y string, limit int) ([]domain.Shop, error) {
+func (s *LocalShopRepository) Search(x, y string, page, size int) (domain.ShopServiceSearchResponse, error) {
 	xKey, _ := strconv.Atoi(getPath(x, 6))
 	yKey, _ := strconv.Atoi(getPath(y, 5))
-	shops := s.bfsSearch(xKey, yKey, limit)
-	return shops, nil
+	shops := s.bfsSearch(xKey, yKey, size)
+	return domain.ShopServiceSearchResponse{
+		Shops: shops,
+	}, nil
 }
 
-func (s *ShopRepository) bfsSearch(xKey, yKey int, limit int) []domain.Shop {
+func (s *LocalShopRepository) bfsSearch(xKey, yKey int, limit int) []domain.Shop {
 	type tuple struct {
 		x int
 		y int

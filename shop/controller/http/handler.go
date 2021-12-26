@@ -22,9 +22,10 @@ func RegisterShopHandler(engine *gin.Engine, svc domain.ShopService) {
 
 func (h *ShopHandler) Search(c *gin.Context) {
 	var p struct {
-		X     string `form:"x"`
-		Y     string `form:"y"`
-		Limit int    `form:"limit"`
+		X    string `form:"x"`
+		Y    string `form:"y"`
+		Size int    `form:"size"`
+		Page int    `form:"page"`
 	}
 
 	if err := c.ShouldBindQuery(&p); err != nil {
@@ -32,11 +33,14 @@ func (h *ShopHandler) Search(c *gin.Context) {
 		return
 	}
 
-	if p.Limit == 0 {
-		p.Limit = 20
+	if p.Size == 0 {
+		p.Size = 20
+	}
+	if p.Page == 0 {
+		p.Page = 1
 	}
 
-	shops, err := h.shopServcie.Search(p.X, p.Y, p.Limit)
+	shops, err := h.shopServcie.Search(p.X, p.Y, p.Page, p.Size)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err)
 		return

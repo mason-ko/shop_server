@@ -18,7 +18,7 @@ func main() {
 
 	r := gin.Default()
 
-	shopRepo := repository.NewShopRepository()
+	shopRepo := repository.NewKaKaoShopRepository()
 	shopSvc := service.NewShopService(shopRepo)
 
 	http.RegisterShopHandler(r, shopSvc)
