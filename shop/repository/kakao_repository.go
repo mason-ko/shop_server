@@ -70,6 +70,8 @@ func (s *kakaoShopRepository) call(x, y string, page, size int) (domain.ShopServ
 		Documents []domain.Shop          `json:"documents"`
 		Meta      map[string]interface{} `json:"meta"`
 	}
+	fmt.Println("=========== resp ", string(bytes))
+
 	err = json.Unmarshal(bytes, &r)
 	if err != nil {
 		return domain.ShopServiceSearchResponse{}, err

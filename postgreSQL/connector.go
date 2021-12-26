@@ -30,6 +30,7 @@ func GetKey() (string, error) {
 	if err != nil {
 		return "", err
 	}
+	fmt.Println("============= GET KEY!!!!!!!!!!!!!!!!!!!!!!!!! ", key.Key)
 
 	return key.Key, nil
 }
