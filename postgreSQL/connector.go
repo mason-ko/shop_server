@@ -2,12 +2,14 @@ package postgreSQL
 
 import (
 	"database/sql"
+	"fmt"
 	_ "github.com/lib/pq"
 	"os"
 )
 
 func GetKey() (string, error) {
 	dbURL := os.Getenv("DATABASE_URL")
+	fmt.Println("============= DB!!!!!!!!!!!!!!!!!!!!!!!!! ", dbURL)
 	db, err := sql.Open("postgres", dbURL)
 	if err != nil {
 		return "", err
