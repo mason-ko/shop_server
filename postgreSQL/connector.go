@@ -2,6 +2,7 @@ package postgreSQL
 
 import (
 	"database/sql"
+	_ "github.com/lib/pq"
 	"os"
 )
 
