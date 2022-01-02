@@ -1,6 +1,7 @@
 package main
 
 import (
+	"atos.com/shop/controller/graphql"
 	"fmt"
 	"path/filepath"
 	"runtime"
@@ -21,6 +22,7 @@ func main() {
 	shopRepo := repository.NewKaKaoShopRepository()
 	shopSvc := service.NewShopService(shopRepo)
 
+	graphql.RegisterGraphQlShopHandler(r, shopSvc)
 	http.RegisterShopHandler(r, shopSvc)
 
 	r.Run()
