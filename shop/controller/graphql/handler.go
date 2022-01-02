@@ -69,7 +69,7 @@ func RegisterGraphQlShopHandler(engine *gin.Engine, svc domain.ShopService) {
 		Pretty: true,
 	})
 
-	engine.GET("/graphql", func(c *gin.Context) {
+	engine.POST("/graphql", func(c *gin.Context) {
 		gqlHandler.ServeHTTP(c.Writer, c.Request)
 	})
 }
