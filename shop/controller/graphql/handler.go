@@ -8,19 +8,34 @@ import (
 )
 
 type ShopHandler struct {
-	shopServcie domain.ShopService
+	shopService domain.ShopService
 }
 
 func RegisterGraphQlShopHandler(engine *gin.Engine, svc domain.ShopService) {
 	h := ShopHandler{
-		shopServcie: svc,
+		shopService: svc,
 	}
+
+	var shopsObject = graphql.NewObject(graphql.ObjectConfig{
+		Name: "shops",
+		IsTypeOf: func(p graphql.IsTypeOfParams) bool {
+			return true
+		},
+		Fields: graphql.Fields{
+			"total_count": &graphql.Field{
+				Type: graphql.Int,
+			},
+			"shops": &graphql.Field{
+				Type: graphql.NewList(domain.ShopType),
+			},
+		},
+	})
 
 	var queryType = graphql.NewObject(graphql.ObjectConfig{
 		Name: "Query",
 		Fields: graphql.Fields{
 			"shops": &graphql.Field{
-				Type: graphql.String,
+				Type: shopsObject,
 				Args: graphql.FieldConfigArgument{
 					"x": &graphql.ArgumentConfig{
 						Type:         graphql.String,
@@ -46,7 +61,7 @@ func RegisterGraphQlShopHandler(engine *gin.Engine, svc domain.ShopService) {
 				Resolve: h.Search,
 			},
 			"shop": &graphql.Field{
-				Type: graphql.String,
+				Type: domain.ShopType,
 				Args: graphql.FieldConfigArgument{
 					"id": &graphql.ArgumentConfig{
 						Type:         graphql.String,
@@ -92,7 +107,7 @@ func (h *ShopHandler) Search(p graphql.ResolveParams) (interface{}, error) {
 		return nil, domain.ErrBadParamInput
 	}
 
-	shops, err := h.shopServcie.Search(x, y, page, size)
+	shops, err := h.shopService.Search(x, y, page, size)
 	if err != nil {
 		return nil, err
 	}

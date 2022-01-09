@@ -16,7 +16,7 @@ func GetKey() (string, error) {
 
 	err = db.Ping()
 	if err != nil {
-		panic(err)
+		return "", err
 	}
 
 	var key string

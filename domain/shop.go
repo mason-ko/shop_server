@@ -1,5 +1,7 @@
 package domain
 
+import "github.com/graphql-go/graphql"
+
 type Shop struct {
 	Id              string `json:"id"`
 	PlaceName       string `json:"place_name"`
@@ -14,6 +16,42 @@ type Shop struct {
 	X string `json:"x"`
 	Y string `json:"y"`
 }
+
+var ShopType = graphql.NewObject(graphql.ObjectConfig{
+	Name: "Shop",
+	Fields: graphql.Fields{
+		"id": &graphql.Field{
+			Type: graphql.String,
+		},
+		"place_name": &graphql.Field{
+			Type: graphql.String,
+		},
+		"address_name": &graphql.Field{
+			Type: graphql.String,
+		},
+		"category_name": &graphql.Field{
+			Type: graphql.String,
+		},
+		"address": &graphql.Field{
+			Type: graphql.String,
+		},
+		"road_address_name": &graphql.Field{
+			Type: graphql.String,
+		},
+		"phone": &graphql.Field{
+			Type: graphql.String,
+		},
+		"place_url": &graphql.Field{
+			Type: graphql.String,
+		},
+		"x": &graphql.Field{
+			Type: graphql.String,
+		},
+		"y": &graphql.Field{
+			Type: graphql.String,
+		},
+	},
+})
 
 type ShopServiceSearchResponse struct {
 	Shops      []Shop `json:"shops"`

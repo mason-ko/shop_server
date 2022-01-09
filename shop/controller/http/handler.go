@@ -8,12 +8,12 @@ import (
 )
 
 type ShopHandler struct {
-	shopServcie domain.ShopService
+	shopService domain.ShopService
 }
 
 func RegisterShopHandler(engine *gin.Engine, svc domain.ShopService) {
 	h := ShopHandler{
-		shopServcie: svc,
+		shopService: svc,
 	}
 
 	engine.GET("/search", h.Search)
@@ -40,7 +40,7 @@ func (h *ShopHandler) Search(c *gin.Context) {
 		p.Page = 1
 	}
 
-	shops, err := h.shopServcie.Search(p.X, p.Y, p.Page, p.Size)
+	shops, err := h.shopService.Search(p.X, p.Y, p.Page, p.Size)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err)
 		return
@@ -56,7 +56,7 @@ func (h *ShopHandler) GetShop(c *gin.Context) {
 		return
 	}
 
-	shop, err := h.shopServcie.Get(id)
+	shop, err := h.shopService.Get(id)
 	if err != nil {
 		c.JSON(http.StatusNotFound, domain.ErrNotFound)
 		return
