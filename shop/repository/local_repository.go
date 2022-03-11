@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"atos.com/domain"
-	"atos.com/static"
+	//"atos.com/static"
 )
 
 type LocalShopRepository struct {
@@ -20,37 +20,37 @@ func NewLocalShopRepository() domain.ShopRepository {
 		shops:     map[string][]domain.Shop{},
 	}
 
-	shops1 := loadShops(static.Shops1)
-	shops2 := loadShops(static.Shops2)
-	shops3 := loadShops(static.Shops3)
-
-	for _, v := range shops1 {
-		repo.shopsById[v.Id] = v
-		key := getPath(v.X, 6) + getPath(v.Y, 5)
-		if _, o := repo.shops[key]; !o {
-			repo.shops[key] = []domain.Shop{v}
-		} else {
-			repo.shops[key] = append(repo.shops[key], v)
-		}
-	}
-	for _, v := range shops2 {
-		repo.shopsById[v.Id] = v
-		key := getPath(v.X, 6) + getPath(v.Y, 5)
-		if _, o := repo.shops[key]; !o {
-			repo.shops[key] = []domain.Shop{v}
-		} else {
-			repo.shops[key] = append(repo.shops[key], v)
-		}
-	}
-	for _, v := range shops3 {
-		repo.shopsById[v.Id] = v
-		key := getPath(v.X, 6) + getPath(v.Y, 5)
-		if _, o := repo.shops[key]; !o {
-			repo.shops[key] = []domain.Shop{v}
-		} else {
-			repo.shops[key] = append(repo.shops[key], v)
-		}
-	}
+	//shops1 := loadShops(static.Shops1)
+	//shops2 := loadShops(static.Shops2)
+	//shops3 := loadShops(static.Shops3)
+	//
+	//for _, v := range shops1 {
+	//	repo.shopsById[v.Id] = v
+	//	key := getPath(v.X, 6) + getPath(v.Y, 5)
+	//	if _, o := repo.shops[key]; !o {
+	//		repo.shops[key] = []domain.Shop{v}
+	//	} else {
+	//		repo.shops[key] = append(repo.shops[key], v)
+	//	}
+	//}
+	//for _, v := range shops2 {
+	//	repo.shopsById[v.Id] = v
+	//	key := getPath(v.X, 6) + getPath(v.Y, 5)
+	//	if _, o := repo.shops[key]; !o {
+	//		repo.shops[key] = []domain.Shop{v}
+	//	} else {
+	//		repo.shops[key] = append(repo.shops[key], v)
+	//	}
+	//}
+	//for _, v := range shops3 {
+	//	repo.shopsById[v.Id] = v
+	//	key := getPath(v.X, 6) + getPath(v.Y, 5)
+	//	if _, o := repo.shops[key]; !o {
+	//		repo.shops[key] = []domain.Shop{v}
+	//	} else {
+	//		repo.shops[key] = append(repo.shops[key], v)
+	//	}
+	//}
 
 	return repo
 }
